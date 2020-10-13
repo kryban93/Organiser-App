@@ -1,6 +1,7 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import './App.scss';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import logo from './logo.svg';
+import './App.css';
 import MainView from './Components/MainView/MainView';
 import Nav from './Components/Nav/Nav';
 import FinancesView from './Components/FinancesView/FinancesView';
@@ -11,7 +12,7 @@ function App() {
     <>
       <Router>
         <Nav />
-        <main className='main'>
+        <main>
           <Switch>
             <Route exact path='/'>
               <MainView />
