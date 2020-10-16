@@ -8,7 +8,7 @@ const NotesView = () => {
   const [noteText, setNoteText] = useState('');
 
   function handleClick() {
-    let notes = notesArray;
+    let notes = notesArray.concat();
     const newNote = { title: noteTitle, text: noteText };
 
     notes.push(newNote);

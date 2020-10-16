@@ -1,5 +1,33 @@
-.finance {
-  &__form {
-    margin: 20px;
+@import '../../variables.scss';
+
+.finances {
+  &__title {
+    padding: 20px;
+    font-size: $fontXl;
+    font-weight: $bold;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+
+    &__list {
+      display: flex;
+      flex-direction: column;
+      width: 80%;
+
+      &__item {
+        margin: 10px;
+        padding: 10px;
+
+        &--income {
+          background-color: #a1ffc0;
+        }
+
+        &--expense {
+          background-color: #ffcdcd;
+        }
+      }
+    }
   }
 }

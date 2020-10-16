@@ -1,0 +1,16 @@
+@import '../../variables.scss';
+
+.finances {
+  &__form {
+    position: absolute;
+    bottom: 50px;
+    padding: 20px;
+    margin: 20px;
+    background-color: #d2e4ff;
+
+    &__title {
+      font-size: $fontM;
+      margin-bottom: 10px;
+    }
+  }
+}
