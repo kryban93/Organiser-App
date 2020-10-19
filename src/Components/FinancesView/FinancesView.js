@@ -29,10 +29,10 @@ const FinancesView = () => {
 
   function handleSubmit(event) {
     event.preventDefault();
-    const { financeType, frequencyTime, financeValue, financeText } = event.target;
+    const { financeType, category, financeValue, financeText } = event.target;
     const formElement = {
       financeType: financeType.value,
-      frequencyTime: frequencyTime.value,
+      category: category.value,
       financeValue:
         financeType.value === 'income' ? parseFloat(financeValue.value) : parseFloat(`-${financeValue.value}`),
       financeText: financeText.value,
@@ -50,7 +50,7 @@ const FinancesView = () => {
 
         <div className='finances__content'>
           <ul className='finances__content__list'>
-            {financesList.map(({ financeType, frequencyTime, financeText, financeValue }) => (
+            {financesList.map(({ financeType, category, financeText, financeValue }) => (
               <li key={financeText}>
                 <div
                   className={
@@ -60,7 +60,7 @@ const FinancesView = () => {
                   }
                 >
                   <h3>{financeText}</h3>
-                  <h4>{frequencyTime}</h4>
+                  <h4>{category}</h4>
                   <p>{financeValue}</p>
                 </div>
               </li>
@@ -68,6 +68,7 @@ const FinancesView = () => {
           </ul>
           <BalanceCard balanceState={balanceState} />
         </div>
+
         <FinanceForm handleSubmit={handleSubmit} />
       </div>
     </section>

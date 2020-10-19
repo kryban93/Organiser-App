@@ -8,35 +8,51 @@ const FinanceForm = ({ handleSubmit }) => {
     <form className='finances__form' onSubmit={handleSubmit}>
       <h3 className='finances__form__title'>What type of data You want to add</h3>
       <div className='finances__form__type'>
-        <label>
-          <input type='radio' name='financeType' value='income' />
+        <input
+          id='income'
+          type='radio'
+          name='financeType'
+          value='income'
+          className='finances__form__type__input'
+          defaultChecked
+        />
+        <label htmlFor='income' className='finances__form__type__label'>
           income
         </label>
-        <label>
-          <input type='radio' name='financeType' value='expense' />
+
+        <input id='expense' type='radio' name='financeType' value='expense' className='finances__form__type__input' />
+        <label htmlFor='expense' className='finances__form__type__label'>
           expense
         </label>
       </div>
-      <div className='finances__form__time'>
+      <div className='finances__form__category'>
         <label>
-          <input type='radio' name='frequencyTime' value='once' />
-          once
+          <input type='radio' name='category' value='finances' defaultChecked />
+          finances
         </label>
         <label>
-          <input type='radio' name='frequencyTime' value='yearly' />
-          yearly
+          <input type='radio' name='category' value='basic costs' />
+          basic costs
         </label>
         <label>
-          <input type='radio' name='frequencyTime' value='monthly' />
-          monthly
+          <input type='radio' name='category' value='cash' />
+          cash
         </label>
         <label>
-          <input type='radio' name='frequencyTime' value='weekly' />
-          weekly
+          <input type='radio' name='category' value='health' />
+          healts
         </label>
         <label>
-          <input type='radio' name='frequencyTime' value='daily' />
-          daily
+          <input type='radio' name='category' value='home & bills' />
+          home & bills
+        </label>
+        <label>
+          <input type='radio' name='category' value='entertainment' />
+          entertainment
+        </label>
+        <label>
+          <input type='radio' name='category' value='others' />
+          others
         </label>
       </div>
       <input

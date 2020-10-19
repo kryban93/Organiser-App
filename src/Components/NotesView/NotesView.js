@@ -1,35 +1,48 @@
 import React, { useState } from 'react';
 import './NotesView.scss';
 import Note from '../Note/Note';
+import NotesForm from '../NotesForm/NotesForm';
 
 const NotesView = () => {
-  const [notesArray, setNotesArray] = useState([]);
-  const [noteTitle, setNoteTitle] = useState('');
-  const [noteText, setNoteText] = useState('');
+  const [notesList, setNotesList] = useState([]);
 
-  function handleClick() {
-    let notes = notesArray.concat();
-    const newNote = { title: noteTitle, text: noteText };
+  function handleClick(event) {
+    event.preventDefault();
 
-    notes.push(newNote);
-    setNotesArray(notes);
+    const { category, title } = event.target;
+    console.log(category.value);
+    let notes = notesList.concat();
+
+    switch (category.value) {
+      case 'note':
+        const { text } = event.target;
+        const newNote = { title: title.value, text: text.value };
+        notes.push(newNote);
+        setNotesList(notes);
+        break;
+
+      case 'list':
+        const {} = event.target;
+        const newList = { title: title.value, text: text.value };
+        notes.push(newList);
+        setNotesList(notes);
+        break;
+      default:
+        return;
+    }
   }
 
   return (
-    <div>
-      <p>This is Notes View</p>
-
-      <div>
-        <input type='text' onChange={(event) => setNoteTitle(event.target.value)} />
-        <textarea type='text' onChange={(event) => setNoteText(event.target.value)} />
-        <button onClick={handleClick}>add note</button>
-      </div>
+    <div className='notes'>
+      <h1 className='notes__title'>This is notes view</h1>
 
       <div className='notes__wrapper'>
-        {notesArray.map((item) => (
-          <Note title={item.title} text={item.text} />
+        {notesList.map(({ title, text }) => (
+          <Note title={title} text={text} key={title} />
         ))}
       </div>
+
+      <NotesForm handleClick={handleClick} />
     </div>
   );
 };
