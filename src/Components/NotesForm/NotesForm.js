@@ -2,14 +2,55 @@ import React, { useState } from 'react';
 import './NotesForm.scss';
 import * as icons from '../../assets/icons/index';
 
-const NotesForm = ({ handleClick }) => {
+const NotesForm = () => {
   const [noteTitle, setNoteTitle] = useState('');
   const [noteText, setNoteText] = useState('');
   const [listState, setListState] = useState([]);
   const [listItemState, setListItemState] = useState('');
-  const [toDoState, setToDoState] = useState([]);
+  const [toDoStateList, setToDoStateList] = useState([]);
   const [toDoItemState, setToDoItemState] = useState('');
   const [typeOfNote, setTypeOfNote] = useState('note');
+  const [notesList, setNotesList] = useState([]);
+
+  function handleClick(event) {
+    event.preventDefault();
+
+    const { category, title } = event.target;
+    console.log(category.value);
+    let notes = notesList.concat();
+
+    switch (category.value) {
+      case 'note': {
+        const { text } = event.target;
+        const newNote = { type: category.value, title: title.value, text: text.value };
+        notes.push(newNote);
+        setNotesList(notes);
+        break;
+      }
+      case 'list': {
+        const newList = { type: category.value, title: title.value, list: listState };
+        notes.push(newList);
+        setNotesList(notes);
+        break;
+      }
+      case 'todo': {
+        const newTodo = { type: category.value, title: title.value, todos: toDoStateList };
+        notes.push(newTodo);
+        setNotesList(notes);
+        break;
+      }
+      case 'calendar': {
+        const newCalendar = { type: category.value, title: title.value };
+        notes.push(newCalendar);
+        setNotesList(notes);
+        break;
+      }
+      default:
+        return;
+    }
+
+    console.log(notesList);
+  }
 
   const handleRadioInputChange = (event) => {
     setTypeOfNote(event.target.value);
@@ -25,10 +66,10 @@ const NotesForm = ({ handleClick }) => {
 
   const addToDoItem = (event) => {
     event.preventDefault();
-    let temporaryToDoArray = toDoState.concat();
+    let temporaryToDoArray = toDoStateList.concat();
 
     temporaryToDoArray.push(toDoItemState);
-    setToDoState(temporaryToDoArray);
+    setToDoStateList(temporaryToDoArray);
   };
   return (
     <form className='notes__form' onSubmit={handleClick}>
@@ -130,9 +171,9 @@ const NotesForm = ({ handleClick }) => {
           />
           <button onClick={addToDoItem}>add item</button>
 
-          {toDoState.map((item) => (
+          {toDoStateList.map((item) => (
             <label>
-              <input type='checkbox' name={`toDo${toDoState.indexOf(item)}`} />
+              <input type='checkbox' name={`toDo${toDoStateList.indexOf(item)}`} />
               {item}
             </label>
           ))}
