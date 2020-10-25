@@ -1,59 +1,82 @@
 import React, { useState } from 'react';
-import './NotesForm.scss';
-import * as icons from '../../assets/icons/index';
+import { useDispatch } from 'react-redux';
+import { addNoteAction } from '../../actions';
+import * as style from './NotesForm.module.scss';
+import NotesFormTypes from '../NotesFormTypes/NotesFormTypes';
+import NotesFormCategories from '../NotesFormCategories/NotesFormCategories';
 
 const NotesForm = () => {
   const [noteTitle, setNoteTitle] = useState('');
   const [noteText, setNoteText] = useState('');
   const [listState, setListState] = useState([]);
   const [listItemState, setListItemState] = useState('');
-  const [toDoStateList, setToDoStateList] = useState([]);
+  const [tasksStateList, setTasksStateList] = useState([]);
   const [toDoItemState, setToDoItemState] = useState('');
   const [typeOfNote, setTypeOfNote] = useState('note');
-  const [notesList, setNotesList] = useState([]);
+  const [categoryOfNote, setCategoryOfNote] = useState('');
+  const dispatch = useDispatch();
 
-  function handleClick(event) {
+  function submitNoteForm(event) {
     event.preventDefault();
 
-    const { category, title } = event.target;
-    console.log(category.value);
-    let notes = notesList.concat();
+    const { types, title } = event.target;
 
-    switch (category.value) {
+    switch (types.value) {
       case 'note': {
         const { text } = event.target;
-        const newNote = { type: category.value, title: title.value, text: text.value };
-        notes.push(newNote);
-        setNotesList(notes);
+        const newNote = {
+          type: types.value,
+          title: title.value,
+          text: text.value,
+          created: new Date(),
+          category: categoryOfNote,
+        };
+        dispatch(addNoteAction(newNote));
         break;
       }
       case 'list': {
-        const newList = { type: category.value, title: title.value, list: listState };
-        notes.push(newList);
-        setNotesList(notes);
+        const newList = {
+          type: types.value,
+          title: title.value,
+          list: listState,
+          created: new Date(),
+          category: categoryOfNote,
+        };
+        dispatch(addNoteAction(newList));
         break;
       }
       case 'todo': {
-        const newTodo = { type: category.value, title: title.value, todos: toDoStateList };
-        notes.push(newTodo);
-        setNotesList(notes);
+        const newTodo = {
+          type: types.value,
+          title: title.value,
+          todos: tasksStateList,
+          created: new Date(),
+          category: categoryOfNote,
+        };
+        dispatch(addNoteAction(newTodo));
         break;
       }
       case 'calendar': {
-        const newCalendar = { type: category.value, title: title.value };
-        notes.push(newCalendar);
-        setNotesList(notes);
+        const newCalendar = {
+          type: types.value,
+          title: title.value,
+          created: new Date(),
+          category: categoryOfNote,
+        };
+        dispatch(addNoteAction(newCalendar));
         break;
       }
       default:
         return;
     }
-
-    console.log(notesList);
   }
 
-  const handleRadioInputChange = (event) => {
+  const handleTypesRadioInputChange = (event) => {
     setTypeOfNote(event.target.value);
+  };
+
+  const handleCategoriesRadioInputChange = (event) => {
+    setCategoryOfNote(event.target.value);
   };
 
   const addListItem = (event) => {
@@ -66,122 +89,78 @@ const NotesForm = () => {
 
   const addToDoItem = (event) => {
     event.preventDefault();
-    let temporaryToDoArray = toDoStateList.concat();
+    let temporaryToDoArray = tasksStateList.concat();
 
     temporaryToDoArray.push(toDoItemState);
-    setToDoStateList(temporaryToDoArray);
+    setTasksStateList(temporaryToDoArray);
   };
   return (
-    <form className='notes__form' onSubmit={handleClick}>
-      <h2 className='notes__form__title'>Select type of note</h2>
-      <div className='notes__form__category'>
-        <label>
-          <input
-            type='radio'
-            name='category'
-            value='note'
-            onChange={handleRadioInputChange}
-            defaultChecked
-            className='notes__form__input--category'
-          />
-          <img src={icons.note_black} alt='new note' className='notes__form__category__icon' />
-        </label>
-        <label>
-          <input
-            type='radio'
-            name='category'
-            value='list'
-            onChange={handleRadioInputChange}
-            className='notes__form__input--category'
-          />
-          <img src={icons.list_black} alt='new list' className='notes__form__category__icon' />
-        </label>
-        <label>
-          <input
-            type='radio'
-            name='category'
-            value='todo'
-            onChange={handleRadioInputChange}
-            className='notes__form__input--category'
-          />
-          <img src={icons.checkbox_black} alt='new toDo' className='notes__form__category__icon' />
-        </label>
-        <label>
-          <input
-            type='radio'
-            name='category'
-            value='calendar'
-            onChange={handleRadioInputChange}
-            className='notes__form__input--category'
-          />
-          <img
-            src={icons.calendar_black}
-            alt='new calendar'
-            className='notes__form__category__icon'
-          />
-        </label>
-      </div>
-      <div>
+    <form className={style.form} onSubmit={submitNoteForm}>
+      <NotesFormTypes handleTypesRadioInputChange={handleTypesRadioInputChange} />
+      <div className={style.form__header}>
+        <label htmlFor='title'>Title</label>
         <input
           type='text'
           name='title'
+          id='title'
           onChange={(event) => setNoteTitle(event.target.value)}
           value={noteTitle}
-          className='notes__form__input notes__form__input--title'
+          className={style.form__header__input}
         />
       </div>
+      <NotesFormCategories handleCategoriesRadioInputChange={handleCategoriesRadioInputChange} />
       {typeOfNote === 'note' ? (
-        <div className='notes__form__content'>
+        <div className={style.form__content}>
+          <label htmlFor='text'>The content of the note</label>
           <textarea
             type='text'
             name='text'
+            id='text'
             onChange={(event) => setNoteText(event.target.value)}
             value={noteText}
-            className='notes__form__input notes__form__input--textarea'
+            className={style.form__content__input}
           />
         </div>
-      ) : null}
-
-      {typeOfNote === 'list' ? (
-        <div className='notes__form__content'>
+      ) : typeOfNote === 'list' ? (
+        <div className={style.form__content}>
+          <label htmlFor='list-input'>list item</label>
           <input
             type='text'
             name='list'
+            id='list-input'
             onChange={(event) => {
               setListItemState(event.target.value);
             }}
             value={listItemState}
-            className='notes__form__input'
+            className={style.form__content__input}
           />
           <button onClick={addListItem}>add to list</button>
-          {listState.map((item) => (
-            <p>{`${listState.indexOf(item) + 1}. ${item}`}</p>
-          ))}
+          <ul>
+            {listState.map((item) => (
+              <li key={listState.indexOf(item)}>{`${listState.indexOf(item) + 1}. ${item}`}</li>
+            ))}
+          </ul>
         </div>
-      ) : null}
-
-      {typeOfNote === 'todo' ? (
-        <div className='notes__form__content'>
+      ) : typeOfNote === 'todo' ? (
+        <div className={style.form__content}>
           <input
             type='text'
             name='todo'
             onChange={(event) => setToDoItemState(event.target.value)}
             value={toDoItemState}
-            className='notes__form__input'
+            className={style.form__content__input}
           />
           <button onClick={addToDoItem}>add item</button>
 
-          {toDoStateList.map((item) => (
+          {tasksStateList.map((item) => (
             <label>
-              <input type='checkbox' name={`toDo${toDoStateList.indexOf(item)}`} />
+              <input type='checkbox' name={`toDo${tasksStateList.indexOf(item)}`} />
               {item}
             </label>
           ))}
         </div>
-      ) : null}
-
-      {typeOfNote === 'calendar' ? (
-        <div className='notes__form__content'>
+      ) : typeOfNote === 'calendar' ? (
+        <div className={style.form__content}>
           <select>
             <option>yearly</option>
             <option>monthly</option>
@@ -202,7 +181,7 @@ const NotesForm = () => {
           </select>
         </div>
       ) : null}
-      <button className='notes__form__btn--submit'>add note</button>
+      <button className='notes__form__btn--submit'>add {typeOfNote}</button>
     </form>
   );
 };

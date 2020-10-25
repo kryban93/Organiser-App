@@ -1,0 +1,57 @@
+@import '../../variables.scss';
+
+.wrapper {
+  margin: 20px;
+  background-color: #ffffff;
+  box-shadow: 3px 2px 3px rgba(0, 0, 0, 0.2);
+  width: 300px;
+  height: 300px;
+}
+
+.header {
+  position: relative;
+  box-sizing: border-box;
+  margin: 5px;
+  padding: 5px;
+  border-bottom: 1px solid black;
+
+  &__title {
+    font-size: $fontXs;
+    font-weight: $bold;
+  }
+
+  &__date {
+    font-size: $fontXxs;
+    color: $grey300;
+  }
+
+  &__btn {
+    position: absolute;
+    top: -4%;
+    right: -4%;
+    border: none;
+    background: transparent;
+
+    &__img {
+      height: 25px;
+    }
+  }
+
+  &--red {
+    border-bottom: 2px solid red;
+  }
+
+  &--blue {
+    border-bottom: 2px solid blue;
+  }
+  &--violet {
+    border-bottom: 2px solid violet;
+  }
+  &--gren {
+    border-bottom: 2px solid green;
+  }
+
+  &--yellow {
+    border-bottom: 2px solid yellow;
+  }
+}

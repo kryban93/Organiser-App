@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import './FinancesView.scss';
 import FinanceForm from '../FinanceForm/FinanceForm';
 import BalanceCard from '../BalanceCard/BalanceCard';
 
 const FinancesView = () => {
-  const [financesList, setFinancesList] = useState([]);
-  const [balanceState, setBalanceState] = useState([]);
+  const [balanceState, setBalanceState] = useState(0);
+
+  const financesArray = useSelector((state) => state.financesOperationsReducer);
 
   useEffect(() => {
     function calculateBalance() {
-      const IncomeValuesArray = financesList.map(({ financeValue, financeType }) => {
+      const IncomeValuesArray = financesArray.map(({ payload: { financeValue, financeType } }) => {
         if (financeType === 'income') {
           return financeValue;
         } else return 0;
       });
-      const ExpenseValuesArray = financesList.map(({ financeValue, financeType }) => {
+      const ExpenseValuesArray = financesArray.map(({ payload: { financeValue, financeType } }) => {
         if (financeType === 'expense') {
           return financeValue;
         } else return 0;
@@ -25,23 +27,7 @@ const FinancesView = () => {
       setBalanceState((totalIncomeValue + totalExpenseValue).toFixed(2));
     }
     calculateBalance();
-  }, [financesList]);
-
-  function handleSubmit(event) {
-    event.preventDefault();
-    const { financeType, category, financeValue, financeText } = event.target;
-    const formElement = {
-      financeType: financeType.value,
-      category: category.value,
-      financeValue:
-        financeType.value === 'income' ? parseFloat(financeValue.value) : parseFloat(`-${financeValue.value}`),
-      financeText: financeText.value,
-    };
-    const financeTemporaryArray = financesList.concat();
-
-    financeTemporaryArray.push(formElement);
-    setFinancesList(financeTemporaryArray);
-  }
+  }, [financesArray]);
 
   return (
     <section>
@@ -50,26 +36,28 @@ const FinancesView = () => {
 
         <div className='finances__content'>
           <ul className='finances__content__list'>
-            {financesList.map(({ financeType, category, financeText, financeValue }) => (
-              <li key={financeText}>
-                <div
-                  className={
-                    financeType === 'income'
-                      ? 'finances__content__list__item finances__content__list__item--income'
-                      : 'finances__content__list__item finances__content__list__item--expense'
-                  }
-                >
-                  <h3>{financeText}</h3>
-                  <h4>{category}</h4>
-                  <p>{financeValue}</p>
-                </div>
-              </li>
-            ))}
+            {financesArray.map(
+              ({ id, payload: { financeType, category, financeValue, financeText } }) => (
+                <li key={financeText}>
+                  <div
+                    className={
+                      financeType === 'income'
+                        ? 'finances__content__list__item finances__content__list__item--income'
+                        : 'finances__content__list__item finances__content__list__item--expense'
+                    }
+                  >
+                    <h3>{financeText}</h3>
+                    <h4>{category}</h4>
+                    <p>{financeValue}</p>
+                  </div>
+                </li>
+              )
+            )}
           </ul>
           <BalanceCard balanceState={balanceState} />
         </div>
 
-        <FinanceForm handleSubmit={handleSubmit} />
+        <FinanceForm />
       </div>
     </section>
   );

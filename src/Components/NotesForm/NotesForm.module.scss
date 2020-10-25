@@ -1,0 +1,33 @@
+@import '../../variables.scss';
+
+.form {
+  background-color: #d2e4ff;
+  margin: 20px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    margin: 5px 20px 30px;
+    width: 60%;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    margin: 20px;
+  }
+
+  & input,
+  textarea {
+    border: none;
+    background-color: #bbd6ff;
+    font-size: $fontXs;
+    font-family: Nunito;
+  }
+}

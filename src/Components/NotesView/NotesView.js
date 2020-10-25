@@ -1,18 +1,23 @@
-import React, { useState } from 'react';
-import './NotesView.scss';
-import Note from '../Note/Note';
+import React from 'react';
+import * as style from './NotesView.module.scss';
 import NotesForm from '../NotesForm/NotesForm';
+import { useSelector } from 'react-redux';
+import Note from '../NoteWrapper/NoteWrapper';
 
 const NotesView = () => {
-  return (
-    <div className='notes'>
-      <h1 className='notes__title'>This is notes view</h1>
+  const notesArray = useSelector((state) => state.notesOperationsReducer);
 
-      {/*<div className='notes__wrapper'>
-        {notesList.map(({ title, text }) => (
-          <Note title={title} text={text} key={title} />
-        ))}
-      </div> */}
+  return (
+    <div className={style.wrapper}>
+      <h1 className={style.title}>This is notes view</h1>
+
+      {
+        <div className={style.notes}>
+          {notesArray.map(({ id, payload }) => (
+            <Note key={id} {...payload} />
+          ))}
+        </div>
+      }
 
       <NotesForm />
     </div>

@@ -1,0 +1,35 @@
+@import '../../variables.scss';
+
+.types {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin: 20px;
+  width: 60%;
+
+  &__title {
+    margin-bottom: 10px;
+    font-size: $fontS;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    & label {
+      margin: 10px;
+    }
+
+    &__input {
+      display: none;
+
+      &:checked + label {
+        background-color: #bbd6ff;
+        transform: scale(1.2);
+        transition: all 0.1s ease-in;
+        padding: 5px;
+      }
+    }
+  }
+}
