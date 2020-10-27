@@ -4,8 +4,8 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  margin: 20px;
-  width: 60%;
+  width: 90%;
+  margin-top: 30px;
 
   &__title {
     margin-bottom: 10px;
@@ -19,17 +19,25 @@
 
     & label {
       margin: 10px;
+      opacity: 0.6;
+      transition: all 0.1s ease-out;
     }
 
     &__input {
       display: none;
 
       &:checked + label {
-        background-color: #bbd6ff;
+        background-color: $inputs;
         transform: scale(1.2);
+        opacity: 1;
         transition: all 0.1s ease-in;
-        padding: 5px;
       }
     }
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .types {
+    width: 60%;
   }
 }

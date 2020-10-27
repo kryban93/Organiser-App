@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 import { addNoteAction } from '../../actions';
 import * as style from './NotesForm.module.scss';
 import NotesFormTypes from '../NotesFormTypes/NotesFormTypes';
 import NotesFormCategories from '../NotesFormCategories/NotesFormCategories';
+import * as icons from '../../assets/icons';
+import NotesFormListType from '../NotesFormListType/NotesFormListType';
 
-const NotesForm = () => {
+const NotesForm = ({ handleCloseFormModal }) => {
   const [noteTitle, setNoteTitle] = useState('');
   const [noteText, setNoteText] = useState('');
   const [listState, setListState] = useState([]);
   const [listItemState, setListItemState] = useState('');
   const [tasksStateList, setTasksStateList] = useState([]);
-  const [toDoItemState, setToDoItemState] = useState('');
+  const [taskItemState, settaskItemState] = useState('');
   const [typeOfNote, setTypeOfNote] = useState('note');
   const [categoryOfNote, setCategoryOfNote] = useState('');
   const dispatch = useDispatch();
@@ -45,15 +48,15 @@ const NotesForm = () => {
         dispatch(addNoteAction(newList));
         break;
       }
-      case 'todo': {
-        const newTodo = {
+      case 'task': {
+        const newtask = {
           type: types.value,
           title: title.value,
-          todos: tasksStateList,
+          tasks: tasksStateList,
           created: new Date(),
           category: categoryOfNote,
         };
-        dispatch(addNoteAction(newTodo));
+        dispatch(addNoteAction(newtask));
         break;
       }
       case 'calendar': {
@@ -81,109 +84,110 @@ const NotesForm = () => {
 
   const addListItem = (event) => {
     event.preventDefault();
-    let temporaryListArray = listState.concat();
+    let temporaryListArray = [...listState];
 
     temporaryListArray.push(listItemState);
     setListState(temporaryListArray);
   };
 
-  const addToDoItem = (event) => {
-    event.preventDefault();
-    let temporaryToDoArray = tasksStateList.concat();
+  const handleAddListItemInput = (event) => {
+    setListItemState(event.target.value);
+  };
 
-    temporaryToDoArray.push(toDoItemState);
-    setTasksStateList(temporaryToDoArray);
+  const addtaskItem = (event) => {
+    event.preventDefault();
+    let temporarytaskArray = [...tasksStateList];
+
+    temporarytaskArray.push(taskItemState);
+    setTasksStateList(temporarytaskArray);
   };
   return (
-    <form className={style.form} onSubmit={submitNoteForm}>
-      <NotesFormTypes handleTypesRadioInputChange={handleTypesRadioInputChange} />
-      <div className={style.form__header}>
-        <label htmlFor='title'>Title</label>
-        <input
-          type='text'
-          name='title'
-          id='title'
-          onChange={(event) => setNoteTitle(event.target.value)}
-          value={noteTitle}
-          className={style.form__header__input}
-        />
-      </div>
-      <NotesFormCategories handleCategoriesRadioInputChange={handleCategoriesRadioInputChange} />
-      {typeOfNote === 'note' ? (
-        <div className={style.form__content}>
-          <label htmlFor='text'>The content of the note</label>
-          <textarea
-            type='text'
-            name='text'
-            id='text'
-            onChange={(event) => setNoteText(event.target.value)}
-            value={noteText}
-            className={style.form__content__input}
-          />
-        </div>
-      ) : typeOfNote === 'list' ? (
-        <div className={style.form__content}>
-          <label htmlFor='list-input'>list item</label>
+    <div className={style.wrapper}>
+      <form className={style.form} onSubmit={submitNoteForm}>
+        <button onClick={handleCloseFormModal} className={style[`form__btn--close`]}>
+          <img src={icons.close_black} alt='close note form' />
+        </button>
+        <NotesFormTypes handleTypesRadioInputChange={handleTypesRadioInputChange} />
+        <div className={style.form__header}>
+          <label htmlFor='title'>Title</label>
           <input
             type='text'
-            name='list'
-            id='list-input'
-            onChange={(event) => {
-              setListItemState(event.target.value);
-            }}
-            value={listItemState}
-            className={style.form__content__input}
+            name='title'
+            id='title'
+            onChange={(event) => setNoteTitle(event.target.value)}
+            value={noteTitle}
+            className={style.form__header__input}
           />
-          <button onClick={addListItem}>add to list</button>
-          <ul>
-            {listState.map((item) => (
-              <li key={listState.indexOf(item)}>{`${listState.indexOf(item) + 1}. ${item}`}</li>
-            ))}
-          </ul>
         </div>
-      ) : typeOfNote === 'todo' ? (
-        <div className={style.form__content}>
-          <input
-            type='text'
-            name='todo'
-            onChange={(event) => setToDoItemState(event.target.value)}
-            value={toDoItemState}
-            className={style.form__content__input}
-          />
-          <button onClick={addToDoItem}>add item</button>
 
-          {tasksStateList.map((item) => (
-            <label>
-              <input type='checkbox' name={`toDo${tasksStateList.indexOf(item)}`} />
-              {item}
-            </label>
-          ))}
-        </div>
-      ) : typeOfNote === 'calendar' ? (
-        <div className={style.form__content}>
-          <select>
-            <option>yearly</option>
-            <option>monthly</option>
-            <option>weekly</option>
-            <option>daily</option>
-            <option>custom</option>
-            <option>once</option>
-          </select>
-          <input type='date' name='date-start' />
-          <input type='date' name='date-end' />
-          <input type='time' name='date-time' />
-          <select>
-            <option>15mins</option>
-            <option>30mins</option>
-            <option>60mins</option>
-            <option>90mins</option>
-            <option>whole day</option>
-          </select>
-        </div>
-      ) : null}
-      <button className='notes__form__btn--submit'>add {typeOfNote}</button>
-    </form>
+        {typeOfNote === 'note' ? (
+          <div className={style.form__content}>
+            <label htmlFor='text'>The content of the note</label>
+            <textarea
+              type='text'
+              name='text'
+              id='text'
+              onChange={(event) => setNoteText(event.target.value)}
+              value={noteText}
+              className={style.form__content__input}
+            />
+          </div>
+        ) : typeOfNote === 'list' ? (
+          <NotesFormListType
+            handleAddListItemInput={handleAddListItemInput}
+            addListItem={addListItem}
+            listItemState={listItemState}
+            listState={listState}
+          />
+        ) : typeOfNote === 'task' ? (
+          <div className={style.form__content}>
+            <input
+              type='text'
+              name='task'
+              onChange={(event) => settaskItemState(event.target.value)}
+              value={taskItemState}
+              className={style.form__content__input}
+            />
+            <button onClick={addtaskItem}>add item</button>
+
+            {tasksStateList.map((item) => (
+              <label>
+                <input type='checkbox' name={`task${tasksStateList.indexOf(item)}`} />
+                {item}
+              </label>
+            ))}
+          </div>
+        ) : typeOfNote === 'calendar' ? (
+          <div className={style.form__content}>
+            <select>
+              <option>yearly</option>
+              <option>monthly</option>
+              <option>weekly</option>
+              <option>daily</option>
+              <option>custom</option>
+              <option>once</option>
+            </select>
+            <input type='date' name='date-start' />
+            <input type='date' name='date-end' />
+            <input type='time' name='date-time' />
+            <select>
+              <option>15mins</option>
+              <option>30mins</option>
+              <option>60mins</option>
+              <option>90mins</option>
+              <option>whole day</option>
+            </select>
+          </div>
+        ) : null}
+        <NotesFormCategories handleCategoriesRadioInputChange={handleCategoriesRadioInputChange} />
+        <button className={style.form__btn}>add {typeOfNote}</button>
+      </form>
+    </div>
   );
 };
 
 export default NotesForm;
+
+NotesForm.propTypes = {
+  handleCloseFormModal: PropTypes.func.isRequired,
+};

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import './FinanceForm.scss';
+import * as style from './FinanceForm.module.scss';
 import { addFinanceItemAction } from '../../actions';
 import FinancesFormCategories from '../FinancesFormCategories/FinancesFormCategories';
 import * as icons from '../../assets/icons';
 
-const FinanceForm = () => {
+const FinanceForm = ({ handleCloseFormModal }) => {
   const [financeValue, setFinanceValue] = useState('');
   const [financeText, setFinanceText] = useState('');
   const [financeCategory, setFinanceCategory] = useState('');
@@ -29,56 +29,61 @@ const FinanceForm = () => {
     setFinanceCategory(event.target.value);
   };
   return (
-    <form className='finances__form' onSubmit={handleFinancesSubmit}>
-      <h3 className='finances__form__title'>What type of data You want to add</h3>
-      <div className='finances__form__type'>
-        <input
-          id='income'
-          type='radio'
-          name='financeType'
-          value='income'
-          className='finances__form__type__input'
-          defaultChecked
-        />
-        <label htmlFor='income' className='finances__form__type__label'>
-          income
-        </label>
-        <input
-          id='expense'
-          type='radio'
-          name='financeType'
-          value='expense'
-          className='finances__form__type__input'
-        />
-        <label htmlFor='expense' className='finances__form__type__label'>
-          expense
-        </label>
-      </div>
-      <FinancesFormCategories handleRadioInputChange={handleRadioInputChange} />
-      <div className='finances__form__content'>
-        <label htmlFor='finance-text'>enter description</label>
-        <input
-          type='text'
-          onChange={(e) => setFinanceText(e.target.value)}
-          value={financeText}
-          name='financeText'
-          id='finance-text'
-          placeholder='Enter description'
-          className='finances__form__description'
-        />
-        <label htmlFor='finance-value'>enter value</label>
-        <input
-          type='text'
-          onChange={(e) => setFinanceValue(e.target.value)}
-          value={financeValue}
-          name='financeValue'
-          id='finance-value'
-          placeholder='value'
-          className='finances__form__value'
-        />
-        <button>add</button>
-      </div>
-    </form>
+    <div className={style.wrapper}>
+      <form className={style.form} onSubmit={handleFinancesSubmit}>
+        <button onClick={handleCloseFormModal} className={style[`form__btn--close`]}>
+          <img src={icons.close_black} alt='close note form' />
+        </button>
+        <h2 className={style.form__title}>Select data type</h2>
+        <div className={style.form__type}>
+          <input
+            id='income'
+            type='radio'
+            name='financeType'
+            value='income'
+            className={style.form__type__input}
+            defaultChecked
+          />
+          <label htmlFor='income' className={style.form__type__label}>
+            income
+          </label>
+          <input
+            id='expense'
+            type='radio'
+            name='financeType'
+            value='expense'
+            className={style.form__type__input}
+          />
+          <label htmlFor='expense' className={style.form__type__label}>
+            expense
+          </label>
+        </div>
+        <FinancesFormCategories handleRadioInputChange={handleRadioInputChange} />
+        <div className={style.form__content}>
+          <label htmlFor='finance-text'>enter description</label>
+          <input
+            type='text'
+            onChange={(e) => setFinanceText(e.target.value)}
+            value={financeText}
+            name='financeText'
+            id='finance-text'
+            placeholder='Enter description'
+            className='finances__form__description'
+          />
+          <label htmlFor='finance-value'>enter value</label>
+          <input
+            type='text'
+            onChange={(e) => setFinanceValue(e.target.value)}
+            value={financeValue}
+            name='financeValue'
+            id='finance-value'
+            placeholder='value'
+            className='finances__form__value'
+          />
+          <button>add</button>
+        </div>
+      </form>
+    </div>
   );
 };
 

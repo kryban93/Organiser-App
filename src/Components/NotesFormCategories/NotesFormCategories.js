@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import * as style from './NotesFormCategories.module.scss';
 
 const NotesFormCategories = ({ handleCategoriesRadioInputChange }) => {
@@ -72,3 +73,7 @@ const NotesFormCategories = ({ handleCategoriesRadioInputChange }) => {
 };
 
 export default NotesFormCategories;
+
+NotesFormCategories.propTypes = {
+  handleCategoriesRadioInputChange: PropTypes.func.isRequired,
+};

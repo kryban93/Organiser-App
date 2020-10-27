@@ -1,31 +1,33 @@
 import React from 'react';
-import './Nav.scss';
+import * as style from './Nav.module.scss';
 import { NavLink } from 'react-router-dom';
 import * as icons from '../../assets/icons/index';
+import logo from '../../assets/logo/logo.svg';
 
 const Nav = () => {
   return (
-    <nav className='nav'>
-      <div className='nav__menu'>
-        <NavLink to='/'>
-          <div className='nav__menu__item'>
-            <img src={icons.home_white} className='nav__menu__item__img' alt='home' />
-            <p className='nav__menu__item__text'>home</p>
+    <nav className={style.nav}>
+      <img src={logo} alt='logo' className={style.nav__logo} />
+      <div className={style.nav__menu}>
+        <NavLink to='/' exact activeClassName={style['nav__menu__item--active']}>
+          <div className={style.nav__menu__item}>
+            <img src={icons.home_white} className={style.nav__menu__item__img} alt='home' />
           </div>
         </NavLink>
-        <NavLink to='/finances'>
-          <div className='nav__menu__item'>
-            <img src={icons.finance_white} className='nav__menu__item__img' alt='finances' />
-            <p className='nav__menu__item__text'>finance</p>
+        <NavLink to='/finances' activeClassName={style['nav__menu__item--active']}>
+          <div className={style.nav__menu__item}>
+            <img src={icons.finance_white} className={style.nav__menu__item__img} alt='finances' />
           </div>
         </NavLink>
-        <NavLink to='/notes'>
-          <div className='nav__menu__item'>
-            <img src={icons.note_white} className='nav__menu__item__img' alt='notes' />
-            <p className='nav__menu__item__text'>notes</p>
+        <NavLink to='/notes' activeClassName={style['nav__menu__item--active']}>
+          <div className={style.nav__menu__item}>
+            <img src={icons.note_white} className={style.nav__menu__item__img} alt='notes' />
           </div>
         </NavLink>
       </div>
+      <button className={style.nav__logout}>
+        <img src={icons.logout_white} alt='logout button' />
+      </button>
     </nav>
   );
 };

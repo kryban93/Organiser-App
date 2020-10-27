@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import './FinancesView.scss';
+import * as style from './FinancesView.module.scss';
 import FinanceForm from '../FinanceForm/FinanceForm';
 import BalanceCard from '../BalanceCard/BalanceCard';
+import * as icons from '../../assets/icons';
+import FinancesList from '../FinancesList/FinancesList';
 
 const FinancesView = () => {
   const [balanceState, setBalanceState] = useState(0);
+  const [isFormOpen, setFormOpenState] = useState(false);
 
   const financesArray = useSelector((state) => state.financesOperationsReducer);
 
@@ -22,43 +25,42 @@ const FinancesView = () => {
         } else return 0;
       });
 
-      const totalIncomeValue = IncomeValuesArray.reduce((a, b) => a + b, 0);
-      const totalExpenseValue = ExpenseValuesArray.reduce((a, b) => a + b, 0);
+      const totalIncomeValue = parseFloat(IncomeValuesArray.reduce((a, b) => a + b, 0));
+      const totalExpenseValue = parseFloat(ExpenseValuesArray.reduce((a, b) => a + b, 0));
       setBalanceState((totalIncomeValue + totalExpenseValue).toFixed(2));
     }
     calculateBalance();
-  }, [financesArray]);
+  }, [financesArray, balanceState]);
+
+  const handleCloseFormModal = (event) => {
+    event.stopPropagation();
+    setFormOpenState(false);
+  };
 
   return (
-    <section>
-      <div>
-        <h1 className='finances__title'>This is Finances View</h1>
+    <section className={style.wrapper}>
+      <header>
+        {financesArray.length > 0 ? (
+          <h1 className={style.title}>Watch your budget</h1>
+        ) : (
+          <h1 className={style.title}>Add some data..</h1>
+        )}
+      </header>
 
-        <div className='finances__content'>
-          <ul className='finances__content__list'>
-            {financesArray.map(
-              ({ id, payload: { financeType, category, financeValue, financeText } }) => (
-                <li key={financeText}>
-                  <div
-                    className={
-                      financeType === 'income'
-                        ? 'finances__content__list__item finances__content__list__item--income'
-                        : 'finances__content__list__item finances__content__list__item--expense'
-                    }
-                  >
-                    <h3>{financeText}</h3>
-                    <h4>{category}</h4>
-                    <p>{financeValue}</p>
-                  </div>
-                </li>
-              )
-            )}
-          </ul>
-          <BalanceCard balanceState={balanceState} />
-        </div>
-
-        <FinanceForm />
+      <div className={style.content}>
+        {financesArray.length > 0 ? <BalanceCard balanceState={balanceState} /> : null}
+        <FinancesList financesArray={financesArray} />
       </div>
+
+      {isFormOpen && <FinanceForm handleCloseFormModal={handleCloseFormModal} />}
+
+      <button className={style.btn} onClick={() => setFormOpenState(true)}>
+        <img
+          src={icons.addFinance_white}
+          className={style.btn__img}
+          alt='open finances form button'
+        />
+      </button>
     </section>
   );
 };

@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import * as style from './NoteType.module.scss';
 
 const NoteType = ({ type, text }) => {
@@ -11,3 +12,11 @@ const NoteType = ({ type, text }) => {
 };
 
 export default NoteType;
+
+NoteType.propTypes = {
+  text: PropTypes.string,
+};
+
+NoteType.defaultProps = {
+  text: 'Click on the text to edit note content',
+};

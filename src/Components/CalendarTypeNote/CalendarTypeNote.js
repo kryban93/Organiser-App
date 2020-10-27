@@ -3,7 +3,7 @@ import * as style from './CalendarTypeNote.module.scss';
 
 const CalendarTypeNote = ({ type }) => {
   return (
-    <div>
+    <div className={style.wrapper}>
       <h3>{type}</h3>
     </div>
   );

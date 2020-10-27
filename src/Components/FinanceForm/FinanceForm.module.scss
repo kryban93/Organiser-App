@@ -14,46 +14,48 @@
 .form {
   position: fixed;
   top: 0;
-  left: 0;
+  left: 50%;
+  width: 90%;
+  transform: translate(-50%, 0%);
   background-color: $primary;
-  margin: 20px;
+  margin-top: 5px;
+  padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 90%;
 
-  &__header {
-    display: flex;
-    flex-direction: column;
-    margin: 20px;
-    width: 90%;
-  }
-
-  &__content {
-    display: flex;
-    flex-direction: column;
-    width: 90%;
-    margin: 20px;
-  }
-
-  & input,
-  textarea {
+  & input {
     border: none;
     background-color: $inputs;
     font-size: $fontXxs;
     font-family: Nunito;
-    max-width: 100%;
+    margin-bottom: 20px;
+  }
+
+  & label {
+    margin-bottom: 5px;
+  }
+
+  &__title {
+    font-size: $fontM;
+    margin: 10px;
+  }
+
+  &__type {
+    margin: 15px;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  &__content {
+    margin: 15px 10px;
+    display: flex;
+    flex-direction: column;
   }
 
   &__btn {
-    margin: 30px;
-    padding: 5px 15px;
-    border: none;
-    background-color: $tertiary;
-    font-size: $fontS;
-    color: white;
-    border-radius: 4px;
-
     &--close {
       position: absolute;
       background-color: transparent;
@@ -75,13 +77,5 @@
     transform: translate(-50%);
     left: 50%;
     margin-top: 50px;
-
-    &__header {
-      width: 60%;
-    }
-
-    &__content {
-      width: 60%;
-    }
   }
 }

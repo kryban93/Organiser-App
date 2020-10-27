@@ -1,10 +1,10 @@
 @import '../../variables.scss';
 
 .category {
-  width: 60%;
+  width: 90%;
 
   &__title {
-    margin-bottom: 5px;
+    font-size: $fontXs;
   }
 
   &__content {
@@ -18,11 +18,10 @@
     }
 
     &__label {
-      margin: 10px;
       display: inline-block;
-      width: 25px;
-      height: 25px;
-      border-radius: 50%;
+      height: 40px;
+      flex-grow: 1;
+      transition: flex-grow 0.2s ease-out;
 
       &--red {
         background-color: rgb(185, 0, 0);
@@ -46,7 +45,14 @@
     }
 
     & input:checked + label {
-      transform: scale(1.4);
+      flex-grow: 4;
+      transition: flex-grow 0.2s ease-in;
     }
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .category {
+    width: 60%;
   }
 }

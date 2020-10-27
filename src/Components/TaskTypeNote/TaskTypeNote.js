@@ -3,7 +3,7 @@ import * as style from './TaskTypeNote.module.scss';
 
 const TaskTypeNote = ({ type }) => {
   return (
-    <div className='note'>
+    <div className={style.wrapper}>
       <h3>{type}</h3>
     </div>
   );

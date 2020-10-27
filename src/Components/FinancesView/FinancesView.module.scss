@@ -9,11 +9,11 @@
   font-size: $fontM;
 }
 
-.notes {
+.content {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+  flex-direction: column;
   justify-content: space-around;
+  align-items: flex-start;
 }
 
 .btn {
@@ -29,12 +29,17 @@
 }
 
 @media screen and (min-width: 1024px) {
+  .finances {
+    &__content {
+      flex-direction: row;
+
+      &__list {
+        width: 40%;
+      }
+    }
+  }
   .btn {
     right: 150px;
     bottom: 50px;
-  }
-
-  .notes {
-    justify-content: initial;
   }
 }

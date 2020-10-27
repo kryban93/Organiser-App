@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import * as style from './NotesFormTypes.module.scss';
 import * as icons from '../../assets/icons/index';
 
@@ -33,13 +34,13 @@ const NotesFormTypes = ({ handleTypesRadioInputChange }) => {
         <input
           type='radio'
           name='types'
-          value='todo'
-          id='todo'
+          value='task'
+          id='task'
           onChange={handleTypesRadioInputChange}
           className={style.types__content__input}
         />
-        <label htmlFor='todo'>
-          <img src={icons.checkbox_black} alt='new toDo' className={style.types__content__img} />
+        <label htmlFor='task'>
+          <img src={icons.checkbox_black} alt='new task' className={style.types__content__img} />
         </label>
         <input
           type='radio'
@@ -62,3 +63,7 @@ const NotesFormTypes = ({ handleTypesRadioInputChange }) => {
 };
 
 export default NotesFormTypes;
+
+NotesFormTypes.propTypes = {
+  handleTypesRadioInputChange: PropTypes.func.isRequired,
+};

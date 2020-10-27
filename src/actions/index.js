@@ -5,10 +5,10 @@ export const addNoteAction = (note) => {
   };
 };
 
-export const deleteNoteAction = (note) => {
+export const deleteNoteAction = (id) => {
   return {
     type: 'DELETE_NOTE',
-    payload: note,
+    payload: id,
   };
 };
 
@@ -19,9 +19,9 @@ export const addFinanceItemAction = (payload) => {
   };
 };
 
-export const deleteFinanceItemActions = (payload) => {
+export const deleteFinanceItemActions = (id) => {
   return {
     type: 'DELETE_FINANCE_ITEM',
-    payload,
+    payload: id,
   };
 };

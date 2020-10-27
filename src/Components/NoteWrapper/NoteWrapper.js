@@ -1,4 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { deleteNoteAction } from '../../actions';
 import * as style from './NoteWrapper.module.scss';
 import NoteType from '../NoteType/NoteType';
 import ListTypeNote from '../ListTypeNote/ListTypeNote';
@@ -22,11 +25,16 @@ const months = [
 ];
 
 const NoteWrapper = ({ type, title, text, list, id, created, category }) => {
+  const dispatch = useDispatch();
   const formattedDate = `${created.getDate()} ${
     months[created.getMonth()]
   } ${created.getFullYear()}`;
   console.log(formattedDate);
 
+  const deleteNoteFromStore = () => {
+    console.log(id);
+    dispatch(deleteNoteAction(id));
+  };
   return (
     <div className={style.wrapper}>
       <div
@@ -47,7 +55,7 @@ const NoteWrapper = ({ type, title, text, list, id, created, category }) => {
         <h3 className={style.header__title}>{title}</h3>
         <span className={style.header__date}>{formattedDate}</span>
 
-        <button className={style.header__btn}>
+        <button className={style.header__btn} onClick={deleteNoteFromStore}>
           <img
             className={style.header__btn__img}
             src={icons.close_black}
@@ -59,7 +67,7 @@ const NoteWrapper = ({ type, title, text, list, id, created, category }) => {
         <NoteType type={type} text={text} />
       ) : type === 'list' ? (
         <ListTypeNote list={list} />
-      ) : type === 'todo' ? (
+      ) : type === 'task' ? (
         <TaskTypeNote type={type} />
       ) : type === 'calendar' ? (
         <div className='note'>
@@ -71,3 +79,17 @@ const NoteWrapper = ({ type, title, text, list, id, created, category }) => {
 };
 
 export default NoteWrapper;
+
+NoteWrapper.propTypes = {
+  type: PropTypes.oneOf(['note', 'list', 'task', 'calendar']),
+  title: PropTypes.string,
+  text: PropTypes.string,
+  list: PropTypes.array,
+  id: PropTypes.string,
+  created: PropTypes.instanceOf(Date),
+  category: PropTypes.oneOf(['red', 'blue', 'violet', 'green', 'yellow', '']),
+};
+
+NoteWrapper.defaultProps = {
+  category: '',
+};

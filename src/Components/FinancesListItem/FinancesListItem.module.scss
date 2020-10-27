@@ -1,0 +1,48 @@
+@import '../../variables.scss';
+
+.content {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin: 5px;
+  padding: 10px;
+  overflow: hidden;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+
+  &--income {
+    border-left: 10px solid #4eb13b;
+    background-color: #cefcc5;
+  }
+
+  &--expense {
+    border-left: 10px solid #e24040;
+    background-color: #ffe7e7;
+  }
+}
+
+.img {
+  position: absolute;
+  top: 5%;
+  right: 50%;
+  transform: scale(1.6) rotate(45deg);
+  opacity: 0.1;
+}
+
+.value {
+  font-size: $fontS;
+  margin-right: 15%;
+}
+
+.btn {
+  position: absolute;
+  top: 3%;
+  right: -2%;
+  border: none;
+  background: transparent;
+
+  &__img {
+    height: 25px;
+  }
+}

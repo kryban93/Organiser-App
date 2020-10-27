@@ -1,7 +1,7 @@
 const notesOperationsReducer = (state = [], action) => {
   switch (action.type) {
     case 'ADD_NOTE': {
-      const tempArray = state.concat();
+      const tempArray = [...state];
       const id = state.length;
       const newItem = {
         payload: action.payload,
@@ -10,7 +10,12 @@ const notesOperationsReducer = (state = [], action) => {
       tempArray.push(newItem);
       return tempArray;
     }
-
+    case 'DELETE_NOTE': {
+      const tempArray = [...state];
+      const id = action.payload;
+      const filteredArray = tempArray.filter((item) => item.id !== id);
+      return filteredArray;
+    }
     default:
       return state;
   }
