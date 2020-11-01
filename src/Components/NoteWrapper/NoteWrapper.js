@@ -6,7 +6,6 @@ import * as style from './NoteWrapper.module.scss';
 import NoteType from '../NoteType/NoteType';
 import ListTypeNote from '../ListTypeNote/ListTypeNote';
 import TaskTypeNote from '../TaskTypeNote/TaskTypeNote';
-import CalendarTypeNote from '../CalendarTypeNote/CalendarTypeNote';
 import * as icons from '../../assets/icons';
 
 const months = [
@@ -24,17 +23,16 @@ const months = [
   'December',
 ];
 
-const NoteWrapper = ({ type, title, text, list, id, created, category }) => {
+const NoteWrapper = ({ type, title, text, list, id, created, category, tasks }) => {
   const dispatch = useDispatch();
   const formattedDate = `${created.getDate()} ${
     months[created.getMonth()]
   } ${created.getFullYear()}`;
-  console.log(formattedDate);
 
   const deleteNoteFromStore = () => {
-    console.log(id);
     dispatch(deleteNoteAction(id));
   };
+
   return (
     <div className={style.wrapper}>
       <div
@@ -58,7 +56,7 @@ const NoteWrapper = ({ type, title, text, list, id, created, category }) => {
         <button className={style.header__btn} onClick={deleteNoteFromStore}>
           <img
             className={style.header__btn__img}
-            src={icons.close_black}
+            src={icons.trash_black}
             alt='delete note button'
           />
         </button>
@@ -66,14 +64,25 @@ const NoteWrapper = ({ type, title, text, list, id, created, category }) => {
       {type === 'note' ? (
         <NoteType type={type} text={text} />
       ) : type === 'list' ? (
-        <ListTypeNote list={list} />
+        <ListTypeNote list={list} id={id} />
       ) : type === 'task' ? (
-        <TaskTypeNote type={type} />
-      ) : type === 'calendar' ? (
-        <div className='note'>
-          <CalendarTypeNote type={type} />
-        </div>
+        <TaskTypeNote type={type} id={id} tasks={tasks} />
       ) : null}
+      <img
+        src={
+          type === 'note'
+            ? icons.note_black
+            : type === 'list'
+            ? icons.list_black
+            : type === 'task'
+            ? icons.checkbox_black
+            : type === 'calendar'
+            ? icons.calendar_black
+            : null
+        }
+        className={style.watermark}
+        alt='note type watermark'
+      />
     </div>
   );
 };
@@ -85,6 +94,7 @@ NoteWrapper.propTypes = {
   title: PropTypes.string,
   text: PropTypes.string,
   list: PropTypes.array,
+  tasks: PropTypes.array,
   id: PropTypes.string,
   created: PropTypes.instanceOf(Date),
   category: PropTypes.oneOf(['red', 'blue', 'violet', 'green', 'yellow', '']),

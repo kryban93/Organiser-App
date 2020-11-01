@@ -5,6 +5,7 @@ import MainView from './Components/MainView/MainView';
 import Nav from './Components/Nav/Nav';
 import FinancesView from './Components/FinancesView/FinancesView';
 import NotesView from './Components/NotesView/NotesView';
+import CalendarView from './Components/CalendarView/CalendarView';
 
 function App() {
   return (
@@ -21,6 +22,9 @@ function App() {
             </Route>
             <Route path='/notes'>
               <NotesView />
+            </Route>
+            <Route path='/calendar'>
+              <CalendarView />
             </Route>
           </Switch>
         </main>

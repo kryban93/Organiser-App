@@ -42,21 +42,6 @@ const NotesFormTypes = ({ handleTypesRadioInputChange }) => {
         <label htmlFor='task'>
           <img src={icons.checkbox_black} alt='new task' className={style.types__content__img} />
         </label>
-        <input
-          type='radio'
-          name='types'
-          value='calendar'
-          id='calendar'
-          onChange={handleTypesRadioInputChange}
-          className={style.types__content__input}
-        />
-        <label htmlFor='calendar'>
-          <img
-            src={icons.calendar_black}
-            alt='new calendar'
-            className={style.types__content__img}
-          />
-        </label>
       </div>
     </div>
   );

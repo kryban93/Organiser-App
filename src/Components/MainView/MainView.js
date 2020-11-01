@@ -1,11 +1,11 @@
 import React from 'react';
-import './MainView.module.scss';
+import * as style from './MainView.module.scss';
 
 const MainView = () => {
   return (
-    <div>
-      <h1>This is Main View</h1>
-    </div>
+    <section className={style.wrapper}>
+      <h1 className={style.title}>Welcome, User</h1>
+    </section>
   );
 };
 

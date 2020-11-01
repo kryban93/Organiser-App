@@ -1,0 +1,29 @@
+@import '../../variables.scss';
+
+.wrapper {
+  position: relative;
+}
+
+.title {
+  padding: 15px 20px;
+  font-size: $fontM;
+}
+
+.btn {
+  position: fixed;
+  display: block;
+  right: 30px;
+  bottom: 110px;
+  height: 75px;
+  width: 75px;
+  border: none;
+  border-radius: 50%;
+  background-color: $tertiary;
+}
+
+@media screen and (min-width: 1024px) {
+  .btn {
+    right: 150px;
+    bottom: 50px;
+  }
+}

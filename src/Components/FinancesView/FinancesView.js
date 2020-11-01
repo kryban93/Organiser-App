@@ -51,6 +51,9 @@ const FinancesView = () => {
         {financesArray.length > 0 ? <BalanceCard balanceState={balanceState} /> : null}
         <FinancesList financesArray={financesArray} />
       </div>
+      <div>
+        <h5>Tis is your charts:</h5>
+      </div>
 
       {isFormOpen && <FinanceForm handleCloseFormModal={handleCloseFormModal} />}
 

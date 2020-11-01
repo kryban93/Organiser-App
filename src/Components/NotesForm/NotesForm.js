@@ -7,14 +7,15 @@ import NotesFormTypes from '../NotesFormTypes/NotesFormTypes';
 import NotesFormCategories from '../NotesFormCategories/NotesFormCategories';
 import * as icons from '../../assets/icons';
 import NotesFormListType from '../NotesFormListType/NotesFormListType';
+import NotesFormTaskType from '../NotesFormTaskType/NotesFormTaskType';
 
 const NotesForm = ({ handleCloseFormModal }) => {
-  const [noteTitle, setNoteTitle] = useState('');
+  const [noteTitle, setNoteTitle] = useState('Title');
   const [noteText, setNoteText] = useState('');
   const [listState, setListState] = useState([]);
   const [listItemState, setListItemState] = useState('');
   const [tasksStateList, setTasksStateList] = useState([]);
-  const [taskItemState, settaskItemState] = useState('');
+  const [taskItemState, setTaskItemState] = useState('');
   const [typeOfNote, setTypeOfNote] = useState('note');
   const [categoryOfNote, setCategoryOfNote] = useState('');
   const dispatch = useDispatch();
@@ -59,16 +60,6 @@ const NotesForm = ({ handleCloseFormModal }) => {
         dispatch(addNoteAction(newtask));
         break;
       }
-      case 'calendar': {
-        const newCalendar = {
-          type: types.value,
-          title: title.value,
-          created: new Date(),
-          category: categoryOfNote,
-        };
-        dispatch(addNoteAction(newCalendar));
-        break;
-      }
       default:
         return;
     }
@@ -86,7 +77,7 @@ const NotesForm = ({ handleCloseFormModal }) => {
     event.preventDefault();
     let temporaryListArray = [...listState];
 
-    temporaryListArray.push(listItemState);
+    temporaryListArray.push({ text: listItemState, id: `listItem${temporaryListArray.length}` });
     setListState(temporaryListArray);
   };
 
@@ -94,11 +85,19 @@ const NotesForm = ({ handleCloseFormModal }) => {
     setListItemState(event.target.value);
   };
 
-  const addtaskItem = (event) => {
+  const handleAddTaskItemInput = (event) => {
+    setTaskItemState(event.target.value);
+  };
+
+  const addTaskItem = (event) => {
     event.preventDefault();
     let temporarytaskArray = [...tasksStateList];
 
-    temporarytaskArray.push(taskItemState);
+    temporarytaskArray.push({
+      text: taskItemState,
+      isChecked: false,
+      id: `taskItem${temporarytaskArray.length}`,
+    });
     setTasksStateList(temporarytaskArray);
   };
   return (
@@ -140,44 +139,12 @@ const NotesForm = ({ handleCloseFormModal }) => {
             listState={listState}
           />
         ) : typeOfNote === 'task' ? (
-          <div className={style.form__content}>
-            <input
-              type='text'
-              name='task'
-              onChange={(event) => settaskItemState(event.target.value)}
-              value={taskItemState}
-              className={style.form__content__input}
-            />
-            <button onClick={addtaskItem}>add item</button>
-
-            {tasksStateList.map((item) => (
-              <label>
-                <input type='checkbox' name={`task${tasksStateList.indexOf(item)}`} />
-                {item}
-              </label>
-            ))}
-          </div>
-        ) : typeOfNote === 'calendar' ? (
-          <div className={style.form__content}>
-            <select>
-              <option>yearly</option>
-              <option>monthly</option>
-              <option>weekly</option>
-              <option>daily</option>
-              <option>custom</option>
-              <option>once</option>
-            </select>
-            <input type='date' name='date-start' />
-            <input type='date' name='date-end' />
-            <input type='time' name='date-time' />
-            <select>
-              <option>15mins</option>
-              <option>30mins</option>
-              <option>60mins</option>
-              <option>90mins</option>
-              <option>whole day</option>
-            </select>
-          </div>
+          <NotesFormTaskType
+            handleAddTaskItemInput={handleAddTaskItemInput}
+            addTaskItem={addTaskItem}
+            taskItemState={taskItemState}
+            tasksStateList={tasksStateList}
+          />
         ) : null}
         <NotesFormCategories handleCategoriesRadioInputChange={handleCategoriesRadioInputChange} />
         <button className={style.form__btn}>add {typeOfNote}</button>

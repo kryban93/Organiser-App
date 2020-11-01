@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 import { deleteFinanceItemActions } from '../../actions';
 import * as style from './FinancesListItem.module.scss';
 import * as icons from '../../assets/icons';
@@ -41,7 +42,7 @@ const FinancesListItem = ({ financeType, financeText, category, financeValue, id
         <p className={style.value}>{financeValue.toFixed(2)} $</p>
 
         <button className={style.btn} onClick={deleteItemFromStore}>
-          <img src={icons.close_black} alt='delete finances list item' className={style.btn__img} />
+          <img src={icons.trash_black} alt='delete finances list item' className={style.btn__img} />
         </button>
       </div>
     </li>
@@ -49,3 +50,23 @@ const FinancesListItem = ({ financeType, financeText, category, financeValue, id
 };
 
 export default FinancesListItem;
+
+FinancesListItem.propTypes = {
+  financeType: PropTypes.oneOf(['income', 'expense']).isRequired,
+  financeText: PropTypes.string,
+  category: PropTypes.oneOf([
+    'payment',
+    'cash',
+    'basic costs',
+    'health',
+    'home & bills',
+    'entertainment',
+    'others',
+  ]),
+  financeValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  id: PropTypes.string.isRequired,
+};
+
+FinancesListItem.defaultValue = {
+  category: 'others',
+};

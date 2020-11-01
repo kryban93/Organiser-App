@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import * as style from './NotesFormListType.module.scss';
 
 const NotesFormListType = ({ handleAddListItemInput, listItemState, addListItem, listState }) => {
   return (
-    <div className={style.form__content}>
+    <div className={style.content}>
       <label htmlFor='list-input'>list item</label>
       <input
         type='text'
@@ -11,12 +12,12 @@ const NotesFormListType = ({ handleAddListItemInput, listItemState, addListItem,
         id='list-input'
         onChange={handleAddListItemInput}
         value={listItemState}
-        className={style.form__content__input}
+        className={style.content__input}
       />
       <button onClick={addListItem}>add to list</button>
       <ul>
         {listState.map((item) => (
-          <li key={listState.indexOf(item)}>{`${listState.indexOf(item) + 1}. ${item}`}</li>
+          <li key={listState.indexOf(item)}>{`${listState.indexOf(item) + 1}. ${item.text}`}</li>
         ))}
       </ul>
     </div>
@@ -24,3 +25,10 @@ const NotesFormListType = ({ handleAddListItemInput, listItemState, addListItem,
 };
 
 export default NotesFormListType;
+
+NotesFormListType.propTypes = {
+  handleAddListItemInput: PropTypes.func.isRequired,
+  listItemState: PropTypes.string.isRequired,
+  addListItem: PropTypes.func.isRequired,
+  listState: PropTypes.array.isRequired,
+};

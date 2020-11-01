@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import * as style from './FinancesFormCategories.module.scss';
 import * as icons from '../../assets/icons';
 
@@ -121,3 +122,7 @@ const FinancesFormCategories = ({ handleRadioInputChange }) => {
 };
 
 export default FinancesFormCategories;
+
+FinancesFormCategories.propTypes = {
+  handleRadioInputChange: PropTypes.func.isRequired,
+};

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 import * as style from './FinanceForm.module.scss';
 import { addFinanceItemAction } from '../../actions';
 import FinancesFormCategories from '../FinancesFormCategories/FinancesFormCategories';
@@ -88,3 +89,7 @@ const FinanceForm = ({ handleCloseFormModal }) => {
 };
 
 export default FinanceForm;
+
+FinanceForm.propTypes = {
+  handleCloseFormModal: PropTypes.func.isRequired,
+};
