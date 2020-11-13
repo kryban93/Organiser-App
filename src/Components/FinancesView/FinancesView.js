@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import * as style from './FinancesView.module.scss';
-import FinanceForm from '../FinanceForm/FinanceForm';
-import BalanceCard from '../BalanceCard/BalanceCard';
+import FinanceForm from './FinanceForm/FinanceForm';
+import BalanceCard from './BalanceCard/BalanceCard';
 import * as icons from '../../assets/icons';
-import FinancesList from '../FinancesList/FinancesList';
+import FinancesList from './FinancesList/FinancesList';
 
 const FinancesView = () => {
   const [balanceState, setBalanceState] = useState(0);
@@ -57,13 +57,15 @@ const FinancesView = () => {
 
       {isFormOpen && <FinanceForm handleCloseFormModal={handleCloseFormModal} />}
 
-      <button className={style.btn} onClick={() => setFormOpenState(true)}>
-        <img
-          src={icons.addFinance_white}
-          className={style.btn__img}
-          alt='open finances form button'
-        />
-      </button>
+      {!isFormOpen && (
+        <button className={style.btn} onClick={() => setFormOpenState(true)}>
+          <img
+            src={icons.addFinance_white}
+            className={style.btn__img}
+            alt='open finances form button'
+          />
+        </button>
+      )}
     </section>
   );
 };

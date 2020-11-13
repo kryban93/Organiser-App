@@ -1,0 +1,32 @@
+@import '../../../variables.scss';
+
+.balance {
+  position: relative;
+  padding: 10px;
+  margin: 20px;
+  overflow: hidden;
+
+  &--lower {
+    border-bottom: 3px solid #ff4747;
+  }
+
+  &--higher {
+    border-bottom: 3px solid #33d469;
+  }
+}
+
+.img {
+  position: absolute;
+  top: 5%;
+  right: 25%;
+  transform: scale(2.5) rotate(45deg);
+  opacity: 0.1;
+}
+
+@media screen and (min-width: 768px) {
+  .balance {
+    position: absolute;
+    top: 50px;
+    right: 50px;
+  }
+}

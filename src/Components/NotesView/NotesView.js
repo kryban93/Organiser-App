@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import * as style from './NotesView.module.scss';
-import NotesForm from '../NotesForm/NotesForm';
+import NotesForm from './NotesForm/NotesForm';
 import { useSelector } from 'react-redux';
-import Note from '../NoteWrapper/NoteWrapper';
+import Note from './NoteWrapper/NoteWrapper';
 import * as icons from '../../assets/icons';
 
 const NotesView = () => {

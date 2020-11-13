@@ -26,6 +26,12 @@
   border: none;
   border-radius: 50%;
   background-color: $tertiary;
+  transition: transform 0.1s cubic-bezier(0, 0.84, 1, 2.82);
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.2);
+  }
 }
 
 @media screen and (min-width: 1024px) {

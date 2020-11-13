@@ -1,0 +1,50 @@
+@import '../../../variables.scss';
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 80%;
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    max-height: 80px;
+    width: 100%;
+    overflow: scroll;
+  }
+
+  & input {
+    width: 100%;
+  }
+}
+
+.btn {
+  border: none;
+  background-color: $quaternary;
+  color: $grey100;
+  font-size: $fontXxs;
+  padding: 5px 15px;
+  border-radius: 3px;
+  margin: 15px auto;
+  transition: transform 0.1s cubic-bezier(0, 0.84, 1, 2.82);
+
+  &:hover {
+    transform: scale(1.2);
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .content {
+    width: 60%;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .content {
+    &__list {
+      max-height: initial;
+      overflow: visible;
+    }
+  }
+}
